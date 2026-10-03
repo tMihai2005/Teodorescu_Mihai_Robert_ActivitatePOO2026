@@ -1,6 +1,9 @@
 #include <iostream>
-
+using namespace std;
 int main() {
-	std::cout << "Hello world!";
+	int variabila;
+	cout << "Introduceti un numar intreg: ";
+	cin >> variabila;
+	cout << "Ai introdus: " << variabila;
 	return 0;
 }
