@@ -139,6 +139,8 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Seminar02.cpp" />
+    <ClCompile Include="Tema01.2.cpp" />
     <ClCompile Include="Tema01.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
