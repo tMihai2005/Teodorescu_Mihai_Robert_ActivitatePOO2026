@@ -2,16 +2,18 @@
 #include <iostream>
 using namespace std;
 
-class prajitura {
-public:
+class Prajitura {
+private:
 	char* denumire;
 	float pret;
 	int cantitate;
 	bool dePost;
 	int nrIngrediente;
 	string* ingrediente;
-	/*const int id;*/
-	prajitura() {
+	const int id;
+	static int contor;
+public:
+	Prajitura():id(contor++) {
 		this->denumire = new char[strlen("Tiramisu") + 1];
 		strcpy(denumire, "Tiramisu");
 		this->pret = 15;
@@ -24,7 +26,7 @@ public:
 		this->ingrediente[2] = "cafea";
 	}
 
-	prajitura(const char*denumire, float pret) {
+	Prajitura(const char*denumire, float pret):id(contor++) {
 		this->denumire = new char[strlen(denumire) + 1];
 		strcpy(this->denumire, denumire);
 		this->pret = pret;
@@ -35,6 +37,35 @@ public:
 		this->ingrediente[0] = "piscoturi";
 		this->ingrediente[1] = "vanilie";
 		this->ingrediente[2] = "cafea";
+	}
+
+	Prajitura(const Prajitura& p):id(contor++) {
+		this->denumire = new char[strlen(p.denumire) + 1];
+		strcpy(this->denumire, p.denumire);
+
+		this->pret = p.pret;
+		this->cantitate = p.cantitate;
+		this->dePost = p.dePost;
+		this->nrIngrediente = p.nrIngrediente;
+
+		this->ingrediente = new string[this->nrIngrediente];
+		for (int i = 0; i < this->nrIngrediente; i++) {
+			this->ingrediente[i] = p.ingrediente[i];
+		}
+	}
+	~Prajitura(); //declarare destructor
+
+	int getCantitate() {
+		return this->cantitate;
+	}
+	int getPret() {
+		return this->pret;
+	}
+	int getNrIngrediente() {
+		return this->nrIngrediente;
+	}
+	static int getContor() {
+		return contor;
 	}
 
 	void afisare() {
@@ -64,20 +95,32 @@ public:
 	}
 };
 
-float calculeazaCantitateTotala(prajitura* prajituri, int nr_prajituri) {
+int Prajitura::contor = 100;
+
+Prajitura::~Prajitura() {//implementare destructor
+	delete[] this->denumire;
+	delete[] this->ingrediente;
+}
+
+float calculeazaCantitateTotala(Prajitura* prajituri, int nr_prajituri) {
 	float greutate = 0;
 	for (int p = 0; p < nr_prajituri; p++)
-		greutate += prajituri[p].cantitate;
+		greutate += prajituri[p].getCantitate();
 	return greutate;
 }
 
+float calculeazaPretPerIngredient(Prajitura p) {
+	if (p.getNrIngrediente() != 0)
+		return p.getPret() / p.getNrIngrediente();
+}
+
 void main() {
-	prajitura p;
-	prajitura p2("Amandina", 40);
+	/*Prajitura p;
+	Prajitura p2("Amandina", 40);
 	p.afisare();
 	p2.afisare();
 	cout << p.costMediuGram();
-	prajitura* prajituri;
+	Prajitura* prajituri;
 	prajituri = new prajitura[3];
 	prajituri[2].afisare();
 	prajituri[1].pret = 50;
@@ -90,5 +133,12 @@ void main() {
 		cout << prajituri[i].denumire << ' ' << prajituri[i].costMediuGram() << endl;
 	}
 	float greutate_totala = calculeazaCantitateTotala(prajituri, 3);
-	cout << "Total: " << greutate_totala << endl;
+	cout << "Total: " << greutate_totala << endl;*/
+	Prajitura p;
+	p.afisare();
+	Prajitura* pp;
+	//(*pp).afisare();
+	//pp->afisare();
+	Prajitura::getContor();
+	cout << calculeazaPretPerIngredient(p);
 }
