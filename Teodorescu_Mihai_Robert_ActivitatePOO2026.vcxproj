@@ -139,6 +139,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Curs05.cpp" />
     <ClCompile Include="Seminar02.cpp" />
     <ClCompile Include="Seminar03.cpp" />
     <ClCompile Include="Tema01.2.cpp" />
