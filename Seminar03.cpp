@@ -13,6 +13,7 @@ private:
 	const int id;
 	static int contor;
 public:
+	friend class Student;
 	Prajitura():id(contor++) {
 		this->denumire = new char[strlen("Tiramisu") + 1];
 		strcpy(denumire, "Tiramisu");
@@ -55,6 +56,27 @@ public:
 	}
 	~Prajitura(); //declarare destructor
 
+	Prajitura& operator=(const Prajitura& P1) {
+		if (this != &P1) {
+			this->cantitate = P1.cantitate;
+			if (this->denumire != NULL)
+				delete[]this->denumire;
+			this->denumire = new char[strlen(P1.denumire) + 1];
+			strcpy(this->denumire, P1.denumire);
+			this->dePost = P1.dePost;
+			this->pret = P1.pret;
+			this->nrIngrediente = P1.nrIngrediente;
+			if (this->ingrediente != NULL)
+				delete[]this->ingrediente;
+			this->ingrediente = new string[this->nrIngrediente];
+			for (int i = 0; i < this->nrIngrediente; i++) {
+				this->ingrediente[i] = P1.ingrediente[i];
+			}
+		}
+		return *this;
+	}
+
+	//geteri si seteri
 	int getCantitate() {
 		return this->cantitate;
 	}
@@ -114,6 +136,41 @@ float calculeazaPretPerIngredient(Prajitura p) {
 		return p.getPret() / p.getNrIngrediente();
 }
 
+class Student {
+private:
+	string nume;
+	Prajitura prajitura;
+public:
+	Student() {
+		this->nume = "Andrei";
+	}
+	Student(string nume, Prajitura p) {
+		this->nume = nume;
+		this->prajitura = p;
+	}
+	string getNume() {
+		return this->nume;
+	}
+	Prajitura getPrajitura() {
+		return this->prajitura;
+	}
+	void setNume(string nume) {
+		this->nume = nume;
+	}
+	void setPrajitura(Prajitura p) {
+		this->prajitura = p;
+	}
+	float calculeazaNrTotalCalorii(float caloriiPerGram) {
+		float nrTotal = caloriiPerGram * this->prajitura.getCantitate();
+		return nrTotal;
+	}
+	void afiseazaMasa() {
+		cout << this->nume << " mananca prajitura " << this->prajitura.denumire << endl;
+	}
+};
+
+
+
 void main() {
 	/*Prajitura p;
 	Prajitura p2("Amandina", 40);
@@ -140,5 +197,11 @@ void main() {
 	//(*pp).afisare();
 	//pp->afisare();
 	Prajitura::getContor();
+	Prajitura P1("amandina", 20);
+	Student s1("Cristian", P1);
+	s1.afiseazaMasa();
+	cout << s1.calculeazaNrTotalCalorii(0.5);
+	//p = P1;
+	//P1 = P1;
 	cout << calculeazaPretPerIngredient(p);
 }
