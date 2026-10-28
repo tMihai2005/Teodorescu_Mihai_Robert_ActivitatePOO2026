@@ -90,6 +90,13 @@ public:
 		return contor;
 	}
 
+	Prajitura& operator+(Prajitura& p) {
+		Prajitura result = *this;
+		result.pret = this->pret + p.pret;
+		result.cantitate = this->cantitate + p.cantitate;
+		return result;
+	}
+
 	void afisare() {
 		cout << "Denumire: " << this->denumire << endl;
 		cout << "Pret: " << this->pret << endl;
@@ -201,7 +208,7 @@ void main() {
 	Student s1("Cristian", P1);
 	s1.afiseazaMasa();
 	cout << s1.calculeazaNrTotalCalorii(0.5);
-	//p = P1;
+	//p = P1;``	
 	//P1 = P1;
 	cout << calculeazaPretPerIngredient(p);
 }
