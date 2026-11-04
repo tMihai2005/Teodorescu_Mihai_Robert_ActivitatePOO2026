@@ -76,7 +76,7 @@ public:
 		return *this;
 	}
 
-	//geteri si seteri
+#pragma region geteri si seteri
 	int getCantitate() {
 		return this->cantitate;
 	}
@@ -89,13 +89,63 @@ public:
 	static int getContor() {
 		return contor;
 	}
+#pragma endregion
 
+#pragma region operatori
 	Prajitura& operator+(Prajitura& p) {
 		Prajitura result = *this;
 		result.pret = this->pret + p.pret;
 		result.cantitate = this->cantitate + p.cantitate;
 		return result;
 	}
+	string operator[](int pozitie) {
+		if (pozitie >= 0 && pozitie < this->nrIngrediente)
+			return this->ingrediente[pozitie];
+	}
+	operator float() {
+		return this->pret;
+	}
+	explicit operator int() {
+		return this->cantitate;
+	}
+	float operator()() {
+		return this->costMediuGram();
+	}
+	float operator()(float TVA) {
+		return this->pret + (TVA*this->pret)/this->cantitate;
+	}
+	float operator()(int discount) {
+		return (this->pret - (discount/100.0) * this->pret) / this->cantitate;
+	}
+	bool operator==(Prajitura prajitura) {
+		if (strcmp(this->denumire, prajitura.denumire) != 0)
+			return false;
+		if (this->cantitate != prajitura.cantitate)
+			return false;
+		if (this->dePost != prajitura.dePost)
+			return false;
+		if (this->nrIngrediente != prajitura.nrIngrediente)
+			return false;
+		return true;
+	}
+	Prajitura& operator-=(const Prajitura p){
+		if (this->pret > p.pret)
+			this->pret = this->pret - p.pret;
+		else this->pret = 0;
+		return *this;
+	}
+	Prajitura operator+=(string ingredient) {
+		string* aux = new string[this->nrIngrediente + 1];
+		for (int i = 0; i < this->nrIngrediente; i++) {
+			aux[i] = this->ingrediente[i];
+		}
+		aux[this->nrIngrediente] = ingredient;
+		delete[] this->ingrediente;
+		this->ingrediente = aux;
+		this->nrIngrediente++;
+		return *this;
+	}
+#pragma endregion
 
 	void afisare() {
 		cout << "Denumire: " << this->denumire << endl;
@@ -179,36 +229,55 @@ public:
 
 
 void main() {
-	/*Prajitura p;
-	Prajitura p2("Amandina", 40);
-	p.afisare();
-	p2.afisare();
-	cout << p.costMediuGram();
-	Prajitura* prajituri;
-	prajituri = new prajitura[3];
-	prajituri[2].afisare();
-	prajituri[1].pret = 50;
-	prajituri[2].cantitate = 70;
+	///*Prajitura p;
+	//Prajitura p2("Amandina", 40);
+	//p.afisare();
+	//p2.afisare();
+	//cout << p.costMediuGram();
+	//Prajitura* prajituri;
+	//prajituri = new prajitura[3];
+	//prajituri[2].afisare();
+	//prajituri[1].pret = 50;
+	//prajituri[2].cantitate = 70;
 
-	prajituri[0].modificaDenumire("Tort");
-	prajituri[1].modificaDenumire("Ecler");
+	//prajituri[0].modificaDenumire("Tort");
+	//prajituri[1].modificaDenumire("Ecler");
 
-	for (int i = 0; i < 3; i++) {
-		cout << prajituri[i].denumire << ' ' << prajituri[i].costMediuGram() << endl;
-	}
-	float greutate_totala = calculeazaCantitateTotala(prajituri, 3);
-	cout << "Total: " << greutate_totala << endl;*/
+	//for (int i = 0; i < 3; i++) {
+	//	cout << prajituri[i].denumire << ' ' << prajituri[i].costMediuGram() << endl;
+	//}
+	//float greutate_totala = calculeazaCantitateTotala(prajituri, 3);
+	//cout << "Total: " << greutate_totala << endl;*/
 	Prajitura p;
 	p.afisare();
-	Prajitura* pp;
-	//(*pp).afisare();
-	//pp->afisare();
+	//Prajitura* pp;
+	////(*pp).afisare();
+	////pp->afisare();
 	Prajitura::getContor();
-	Prajitura P1("amandina", 20);
+	Prajitura P1("amandina", 20.6);
 	Student s1("Cristian", P1);
-	s1.afiseazaMasa();
-	cout << s1.calculeazaNrTotalCalorii(0.5);
-	//p = P1;``	
-	//P1 = P1;
-	cout << calculeazaPretPerIngredient(p);
+	//s1.afiseazaMasa();
+	//cout << s1.calculeazaNrTotalCalorii(0.5);
+	////p = P1;``	
+	////P1 = P1;
+	//cout << calculeazaPretPerIngredient(p);
+	cout << p[1] << endl;
+	p[1] = "frisca";
+	cout << p[1] << endl;
+	float pret;
+	pret = P1;
+	cout <<"Pret: "<< pret<<endl;
+	int cantitate;
+	cantitate = (int)P1;
+	cout << "Cantitate: " << cantitate<<endl;
+	cout << "Pret per gram: " << P1() << endl;
+	cout << "Pret cu TVA per gram: " << P1(0.21f) << endl;
+	cout << "Pret cu discount per gram: " << P1(10) << endl;
+	if (p == P1) cout << "Prajituri egale" << endl;
+	else
+		cout << "Prajiturile sunt diferite" << endl;
+	p -= P1;
+	cout << p.getPret()<<endl;
+	p += "Faina";
+	cout << p[3];
 }
