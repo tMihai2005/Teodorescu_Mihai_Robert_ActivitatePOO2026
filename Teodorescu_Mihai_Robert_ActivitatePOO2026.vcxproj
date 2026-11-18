@@ -140,8 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Curs05.cpp" />
+    <ClCompile Include="Curs08.cpp" />
     <ClCompile Include="Seminar02.cpp" />
-    <ClCompile Include="Seminar03.cpp" />
+    <ClCompile Include="Seminar1051.cpp" />
+    <ClCompile Include="Seminar1052.cpp" />
     <ClCompile Include="Tema01.2.cpp" />
     <ClCompile Include="Tema01.cpp" />
   </ItemGroup>

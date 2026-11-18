@@ -24,10 +24,16 @@
     <ClCompile Include="Tema01.2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Seminar03.cpp">
+    <ClCompile Include="Seminar1051.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Curs05.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Curs08.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Seminar1052.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
